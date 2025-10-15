@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grade 9 Economics Mini App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Telegram Dark Style */
+        body {
+            background-color: #1e1e2d;
+            /* Telegram-style dark */
+            color: #fff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        ::selection {
+            background: none;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #55acee;
+            /* Highlight for title */
+        }
+
+        p {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            margin-top: 20px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        #content-wrapper {
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        @media screen {
+            body:after {
+                content: '';
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                pointer-events: none;
+                background: rgba(0, 0, 0, 0);
+                z-index: 9999;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content-wrapper">
+        <h1 id="title">Initializing...</h1>
+        <p id="content">Waiting for Telegram Web App data...</p>
+    </div>
+
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <script>
+        // Economics lesson topics for each deep link
+        const topics = {
+            "ab1gggggggggguukjnnnfhududhdhfhfhfhdhdhdteyeurtwjfitkgkgjgoyoyouljkhdncncmvmvhdfafarqrqrqwtweerdffhfjhfbdfbcbfbcbfbdbwfwfqeadzcsvdbdvsfafzcggggggab1gggggggggguukjnnnfhududhdhfhab1gggggggggguukjnnnfhududhdhfhfhfhdhdhdteyeurtwjfitkgkgjgoyoyouljkhdncncmvmvhdfafarqrqrqwtweerdffhfjhfbdfbcbfbcbfbdbwfwfqeadzcsvdbdvsfafzcggggggab1gggggggggguukjnnnfhududhdhfhfhfhdhdhdteyeurtwjfitkgkgjgoyoyouljkhdncncmvmvhdfafarqrqrqwtweerdffhfjhfbdfbcbfbcbfbdbwfwfqeadzcsvdbdvsfafzcgggggghhhhhjjjjjjjjjjjlllllllllllllllpppppppppppppppppppppppppppppppijihjfdhisccscncbvshiwdjxxsiajajxjxjhshsuqjsccghasdertrggfxvbnmmooplhteqazvavabxvbcgcssetxdfjfhdehejqfsvhsjrykfjsvbykfbfdfddssawwwedxcvafsvxbcncbncvmgmhmkhykpiipputuhdhsvshdhdhdbxvdbdbNewtonghggghghghghgh": {
+                title: "Unit 1  - Introducing Economics",
+                content: `📚 1.1 Meaning of Economics
+Unit 1
+In our everyday lives, we buy different goods and services for consumption. 🛒
+በዕለት ተዕለት ሕይወታችን ለፍጆታ (consumption) የተለያዩ ዕቃዎችንና አገልግሎቶችን እንገዛለን። 🛒
+
+Utility is the level of satisfaction or pleasure derived from the consumption of a good or service. 😊
+ውጤታማነት (Utility) አንድን ዕቃ ወይም አገልግሎት ከመጠቀም የምናገኘው የረካንበት ወይም ደስተኛ የሆንበት ደረጃ ነው። 😊
+
+Thus, utility is the power of a commodity to satisfy human wants. 🌟
+ስለዚህ፣ ውጤታማነት የአንድ ሸቀጥ የሰውን ፍላጎት የማርካት ኃይል ነው። 🌟
+
+For example, bread has the power to satisfy hunger, while water quenches our thirst. 🥖💧
+ለምሳሌ፣ ዳቦ ረሃብን የማርካት ኃይል ያለው ሲሆን፣ ውሃ ደግሞ ጥማችንን ያረካል። 🥖💧
+
+
+
+
+
+
+
+Gemini can make mistakes, so douመሬት፣ የሰው ኃይል እና መሳሪያዎችን — በመጠቀም ፍላጎታቸውንና ምኞቶቻቸውን የሚያረኩበትን ዕቃዎችን እና አገልግሎቶችን ለማምረት እንዴት ምርጫ  እንደሚያደርጉ የሚያጠና ሳይንስ ነው። 
+`
+            },
+            "ab2gggggggggguukjnnnfhududhdhfhfhfhdhdhdteyeurtwjfitkgkgjgoyoyouljkhdncncmvmvhdfafarqrqrqwtweerdffhfjhfbdfbcbfbcbfbdbwfwfqeadzcsvdbdvsfafzcggggggab1gggggggggguukjnnnfhududhdhfhab1gggggggggguukjnnnfhududhdhfhfhfhdhdhdteyeurtwjfitkgkgjgoyoyouljkhdncncmvmvhdfafarqrqrqwtweerdffhfjhfbdfbcbfbcbfbdbwfwfqeadzcsvdbdvsfafzcggggggab1gggggggggguukjnnnfhududhdhfhfhfhdhdhdteyeurtwjfitkgkgjgoyoyouljkhdncncmvmvhdfafarqrqrqwtweerdffhfjhfbdfbcbfbcbfbdbwfwfqeadzcsvdbdvsfafzcgggggghhhhhjjjjjjjjjjjlllllllllllllllpppppppppppppppppppppppppppppppijihjfdhisccscncbvshiwdjxxsiajajxjxjhshsuqjsccghasdertrggfxvbnmmooplhteqazvavabxvbcgcssetxdfjfhdehejqfsvhsjrykfjsvbykfbfdfddssawwwedxcvafsvxbcncbncvmgmhmkhykpiipputuhdhsvshdhdhdbxvdbdbNewtonghggghghghghgh": {
+                title: "Unit 1  - Introducing Economics",
+                content: `📚 1.1 Meaning of Economics
+
+📝 The following statements are derived from the above definition of economics:
+ከላይ ከተሰጠው የኢኮኖሚክስ ትርጓሜ የሚከተሉት ነጥቦች አካቷል (derived):
+🤏 Economics studies about scarce resources;
+ኢኮኖሚክስ የሚያጠናው ስለ ውስን (scare) ሀብቶች ነው።
+📊 It studies about allocation of resources;
+ስለ ሀብቶች ምደባ (allocation) ያጠናል፤                                                             
+✔️ Allocation of resources should be efficient;
+የሀብቶች ምደባ ብቃት ያለው (efficient) መሆን አለበት።
+
+♾️ Human needs are unlimited. 
+የሰው ልጅ ፍላጎቶች ገደብ የለሽ ናቸው።
+🎯 The objective of economics is to study how to satisfy the unlimited human needs up to the maximum possible degree through allocating the scarce resources efficiently.
+የኢኮኖሚክስ ዓላማ ውስን ሀብቶችን በብቃት በመመደብ ገደብ የለሽ የሆኑ የሰውን ፍላጎቶች በከፍተኛው ደረጃ እንዴት ማርካት እንደሚቻልወይም  ፍላጎቱንእንዴት ሟሟላትእንደሚቻልየሚያጠና  ነው።
+💡 In General, Because human wants are unlimited and available resources are limited, the study of the choices made to satisfy these unlimited wants to the highest degree possible is what we call economics. 
+ የሰው ልጅ ፍላጎት ገደብ የለሽ በመሆኑ ምክንያት፣ እና ያለው ሀብት የተገደበ በመሆኑ፣ ይህን ገደብ የለሽ ፍላጎት በከፍተኛሁኔታ ለመሙላት የሚወስደውን ምርጫ  የሚያጠናው  የ social science branch ኢኮኖሚክስይባላል። 
+
+🤔 The Nature of Economics(የኢኮኖሚክስ ተፈጥሯዊ ባህሪ)
+The lack of uniformity in defining economics emanates from the shifting views about the subject matter over time. Some economists consider economics a ‘science’ while others consider it an “art.”
+የኢኮኖሚክስን ትርጉም በመስጠት ላይ ያለው ልዩነት የመጣው ከጊዜ ወደ ጊዜ ስለ ትምህርቱ ይዘት ከሚለዋወጡት አመለካከቶች ነው። አንዳንድ ኢኮኖሚስቶች ኢኮኖሚክስን ‘ሳይንስ’ ሲሉ ሌሎች ደግሞ “ጥበብ” (Art)  አድርገው  ይወስዱታል።
+🔬 Economics as a Science(ኢኮኖሚክስ እንደ ሳይንስ ስንመለከተው)
+
+Science produces a systematic and organised body of knowledge that links causes and effects. This knowledge can be regarded as the knowledge of “what is”. In economics, several facts are systematically collected, classified, analysed, and interpreted to make predictions about the future. In this sense, economics could be considered a science.
+ኢኮኖሚክስ በምክንያትናበ ውጤት መካከልያለውን ግንኙነት ለመረዳት እውነታዎችን(fact) systematically
+ ስለሚሰበስብ፣
+ ስለሚያደራጅ(classified) እና
+ ስለሚተነትን(analysed) እንደ ሳይንስ ይቆጠራል።
+
+ 
+ኢኮኖሚስቶች “what its” በማጥናት ባገኙት መረጃ መሰረት  የኢኮኖሚ  ባህርይን ለማስረዳትና ስለ ወደፊት ክስተቶች ትንበያ ለመስጠት ይጠቀሙበታል።
+
+📊 In economics, studying “what is” means examining real facts — like prices, production, and income — to understand how the economy works, without giving opinions or judgments.
+በኢኮኖሚክስ ውስጥ “what is” ማጥናት ማለት አስተያየቶችን ወይም ፍርዶችን ካለመረጃ ሳይሰጡ፣ ኢኮኖሚው እንዴት እንደሚሰራ ለመረዳት ትክክለኛ እውነታዎችን— እንደ ዋጋ፣ ምርት እና ገቢ—  ባሉ መረጃ መሰረትመመርመርማለት ነው።
+
+🎨 Economics as an Art
+One of the important definitions of art is a technique or a way of doing or achieving something. When dealing with problems such as unemployment, poverty, and inflation, economics provides principles and methods through which these problems can be solved. Hence, economics extensively examines the nature and causes of economic problems and sets the procedures for finding their solutions. From this perspective, we can consider economics as an art.
+ከጥበብ ዋና ዋና ትርጓሜዎች አንዱ አንድን ነገር ለመሥራት ወይም ለማሳካት የሚያስችል ዘዴ ወይም መንገድ ነው። እንደ ሥራ አጥነት፣ ድህነት እና የዋጋ ግሽበት ያሉ ችግሮችን በምንመለከትበት ጊዜ፣ ኢኮኖሚክስ እነዚህ ችግሮች የሚፈቱበትን መርሆች እና ዘዴዎች ያቀርባል። ስለዚህ፣ ኢኮኖሚክስ የኢኮኖሚ ችግሮችን ባሕርይና ምክንያቶች በሰፊው ከመረመረ በኋላመፍትሄ የሚያገኝበትን ሂደቶች ይወስናል። ከዚም  በመነሳት ኢኮኖሚክስን እንደ ጥበብ  መቁጠር( considered as an art) እንችላለን።`
+            }
+        };
+
+        // Function to update page content
+        function updateContent(topicKey) {
+            const titleElement = document.getElementById("title");
+            const contentElement = document.getElementById("content");
+            const topic = topics[topicKey];
+
+            if (topic) {
+                titleElement.textContent = topic.title;
+                contentElement.textContent = topic.content;
+            } else {
+                titleElement.textContent = "Welcome to Grade 9 Economics tutorials – stay with us!";
+                contentElement.textContent = "";
+            }
+        }
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            let topicKey = null;
+
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.ready();
+                if (Telegram.WebApp.initDataUnsafe?.start_param) {
+                    topicKey = Telegram.WebApp.initDataUnsafe.start_param;
+                }
+
+                Telegram.WebApp.setBackgroundColor('#1e1e2d');
+                Telegram.WebApp.setHeaderColor('#1e1e2d');
+            }
+
+            // Fallback for testing in browser
+            if (!topicKey) {
+                const urlParams = new URLSearchParams(window.location.search);
+                topicKey = urlParams.get("topic");
+            }
+
+            updateContent(topicKey);
+        });
+    </script>
+</body>
+
+
+</html>
